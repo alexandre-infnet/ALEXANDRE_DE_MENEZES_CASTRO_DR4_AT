@@ -243,8 +243,83 @@ def questao_5b():
         json.dump(chunk_summaries, file, ensure_ascii=False, indent=4)
 
 
+def questao6():
+    prompt = """
+    Pergunta: Me retorne apenas o trecho de código Python para gerar duas abas no Streamlit com o nome 'Bem-vindos' e 'Sobre',
+    com o titulo 'Olá, bem vindo' na aba 'Bem-vindos' e a descrição "Essa é a nossa página principal".
+    Resposta:
+
+    tab1, tab2 = st.tabs(["Bem-vindos", "Sobre"])
+
+    with tab1:
+        st.header("Olá, bem vindo")
+        st.subheader("Essa é a nossa página principal")
+
+    with tab2:
+        st.header("Sobre")
+
+    Pergunta: Me retorne apenas o trecho de código Python para adicionar a aba com o nome 'Bem-vindos' uma imagem chamada 'bem_vindos.png'.
+    Resposta:
+
+    tab1 = st.tabs(["Bem-vindos"])
+
+    with tab1:
+        st.image("bem_vindos.png")
+
+    Pergunta: Me retorne apenas o trecho de código Python para adicionar a aba com o nome 'Bem-vindos' um arquivo YAML chamado 'data/config.yaml' e retornar a chave 'chave' do arquivo
+    Resposta:
+
+    tab1 = st.tabs(["Bem-vindos"])
+
+    with tab1:
+        json_file = 'respostas.json'
+        key = 'asjdhds
+
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            st.write(data[key])
+
+    Pergunta: Me retorne apenas o trecho de código Python para adicionar a aba com o nome 'Bem-vindos' e carregar um json chamado 'data/teste.json' com a key 'asjdhds' e exibi-lo no Streamlit.
+    Resposta:
+
+    tab1 = st.tabs(["Bem-vindos"])
+
+    with tab1:
+        json_file = 'teste.json'
+        key = 'asjdhds
+
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            st.write(data[key])
+
+    Pergunta: Me retorne apenas o trecho de código Python para adicionar a aba com o nome 'Bem-vindos' e ler um arquivo YAML chamado 'teste.yaml' e retornar a chave 'testando' do arquivo.
+    Resposta:
+
+    tab1 = st.tabs(["Bem-vindos"])
+
+    with tab1:
+        yaml_file = "teste.yaml"
+        key = "testando"
+
+        with open(yaml_file, "r") as file:
+            config = yaml.safe_load(file)
+            st.write(config[key])
+
+    Pergunta: Me retorne apenas o trecho de código Python para gerar três abas no Streamlit com o nome 'Overview', 'Despesas' e 'Proposições',
+    com o titulo 'Overview', descrição "Bem vindos ao Dashboard", uma imagem chamada 'docs/distribuicao_deputados.png', carregar um json chamado 'data/insights_distribuicao_deputados.json'
+    com a key 'response' e exibi-lo no Streamlit e ler um arquivo YAML chamado 'data/config.yaml' e retornar a chave 'chave' do arquivo. na aba 'Overview'?
+    Resposta:
+    """
+
+    response = model.generate_content(prompt)
+
+    # Removendo o markdown do texto gerado
+    texto_limpado = response.text[9:-4].strip()
+    return texto_limpado
+
 if __name__ == "__main__":
-    questao_5b()
+
+
 
 
 
@@ -270,6 +345,17 @@ if __name__ == "__main__":
 
     # Questao 5a:
     #questao_5a()
+
+    # Questao 5b
+    #questao_5b()
+
+    #Questão 6 completa
+    #result = questao6()
+    #with open("dashboard.py", "w") as file:
+        #file.write(result)
+
+
+
 
     #df.to_parquet("data/deputados.parquet", index=False)
 
