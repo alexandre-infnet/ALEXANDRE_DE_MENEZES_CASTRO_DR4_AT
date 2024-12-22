@@ -383,12 +383,11 @@ def questao7():
 
 
 if __name__ == "__main__":
-    # Questão 3
-    #deputados = get_deputados()
-    #df_deputados = pd.DataFrame(deputados)
+    #Questão 3
+    deputados = get_deputados()
+    df_deputados = pd.DataFrame(deputados)
 
-    """
-    prompt =
+    prompt ="""
     Retorne apenas um script em Python utilizando as bibliotecas matplotlib e pandas que gere um gráfico de pizza representando o número total e o percentual
     de deputados de cada partido a partir do conjunto de dados data/deputados.parquet. Considere que os dados serão lidos com o pandas, a coluna siglaPartido
     contem o nome dos partidos. O gráfico de pizza deve conter:
@@ -397,7 +396,7 @@ if __name__ == "__main__":
     3.	Um título para o gráfico.
     Após criar o código do gráfico, salve-o no arquivo docs/distribuicao_deputados.png com alta qualidade.
     Garanta que o código seja bem estruturado e utilize boas práticas, como comentários explicativos.
-
+    """
 
     response = model.generate_content(prompt)
     with open("questoes/questao3b.py", "w") as file:
@@ -409,35 +408,35 @@ if __name__ == "__main__":
     data = {"response": response.text}
 
     with open("data/insights_distribuicao_deputados.json", 'w', encoding='utf-8') as file:
-        json.dump(data, file, ensure_ascii=False, indent=4)"""
+        json.dump(data, file, ensure_ascii=False, indent=4)
 
-    #df.to_parquet("data/deputados.parquet", index=False)
+    df_deputados.to_parquet("data/deputados.parquet", index=False)
 
     # Questão 4
-    # df_despesas = questao4(df_deputados)
+    df_despesas = questao4(df_deputados)
 
     # Questão 4a
-    #df_agrupado = questao4a(df_despesas)
+    df_agrupado = questao4a(df_despesas)
 
     # Questão 4b
-    #questao4b()
+    questao4b()
 
     # Questão 4c
-    #questao4c()
+    questao4c()
 
     # Questão 5
-    #print(questao_5())
+    questao5()
 
     # Questao 5a:
-    #questao_5a()
+    questao_5a()
 
     # Questao 5b
-    #questao_5b()
+    questao_5b()
 
     #Questão 6 completa
-    #result = questao6()
-    #with open("dashboard_chain.py", "w") as file:
-        #file.write(result)
+    result = questao6()
+    with open("dashboard_chain.py", "w") as file:
+        file.write(result)
 
     #Questão 7 Completa
     questao7()
