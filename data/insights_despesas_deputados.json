@@ -1,0 +1,14 @@
+{
+  "maior_gasto": {
+    "categoria": "DIVULGAÇÃO DA ATIVIDADE PARLAMENTAR",
+    "valor": "R$ 500468.00"
+  },
+  "maior_media_gastos_liquidos": {
+    "id_deputado": 123756,
+    "media": "R$ 14178.90"
+  },
+  "despesa_mais_frequente": {
+    "tipo": "MANUTENÇÃO DE ESCRITÓRIO DE APOIO À ATIVIDADE PARLAMENTAR",
+    "frequencia": 64
+  }
+}
