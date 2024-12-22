@@ -317,47 +317,75 @@ def questao6():
     texto_limpado = response.text[9:-4].strip()
     return texto_limpado
 
+
+def generate_code(prompts):
+    responses = []
+    for i, prompt in enumerate(prompts):
+        print(f"Processando {i + 1}/{len(prompts)}...")
+        response = model.generate_content(prompt)
+        responses.append(response.text)
+    return responses
+
+
+def questao7():
+    prompts = [
+        # Prompt para carregar dados
+        """
+        Escreva apenas o código Python para carregar dados necessários em um dashboard Streamlit:
+        - Crie funções para carregar arquivos JSON e Parquet.
+        - Utilize o decorador @st.cache_data para otimizar a performance.
+        - Os arquivos estão localizados nos seguintes caminhos fixos:
+            - data/insights_despesas_deputados.json
+            - data/serie_despesas_diarias_deputados.parquet
+            - data/proposicoes_deputados.parquet
+            - data/sumarizacao_proposicoes.json
+        - Garanta que as funções respeitem as colunas dos arquivos:
+            - `data/insights_despesas_deputados.json` contém os campos: maior_gasto, maior_media_gastos_liquidos (id_deputado), despesa_mais_frequente.
+            - `data/serie_despesas_diarias_deputados.parquet` contém: deputado_id, dataDocumento, tipoDespesa, valorDocumento, valorLiquido.
+            - `data/proposicoes_deputados.parquet` contém: deputado_id, proposicao_id, data_apresentacao, ementa.
+            - `data/sumarizacao_proposicoes.json` contém: resumos categorizados das proposições.
+        - Antes de manipular os DataFrames, verifique se as colunas necessárias existem. Caso não existam, exiba um erro com `st.error` e não execute as operações seguintes.
+        Retorne apenas o código Python.
+        """,
+
+        # Prompt para a aba "Despesas"
+        """
+        Escreva apenas o código Python para implementar a aba "Despesas" em um dashboard Streamlit:
+        - Mostre insights das despesas a partir do arquivo JSON localizado em data/insights_despesas_deputados.json.
+        - Adicione um st.selectbox para selecionar deputados utilizando o campo deputado_id do arquivo Parquet localizado em data/serie_despesas_diarias_deputados.parquet.
+        - Exiba um gráfico de barras da série temporal de despesas do deputado selecionado, utilizando as colunas:
+            - deputado_id: para identificar o deputado selecionado.
+            - dataDocumento: como o eixo X representando a data.
+            - valorLiquido: como o eixo Y representando o valor líquido das despesas.
+        - Certifique-se de que o selectbox usa deputado_id como valor identificador.
+        - Antes de criar o gráfico, verifique se as colunas dataDocumento e valorLiquido existem no DataFrame. Caso contrário, exiba um erro com `st.error`.
+        Não inclua explicações ou comentários. Retorne apenas o código Python.
+        """,
+
+        # Prompt para a aba "Proposições"
+        """
+        Escreva apenas o código Python para implementar a aba "Proposições" em um dashboard Streamlit:
+        - Exiba uma tabela com os dados das proposições carregados do arquivo Parquet localizado em data/proposicoes_deputados.parquet.
+        - Mostre um resumo das proposições carregado do arquivo JSON localizado em data/sumarizacao_proposicoes.json.
+        - Inclua uma verificação para garantir que as colunas deputado_id, proposicao_id, data_apresentacao, ementa existam no DataFrame antes de manipulá-lo. Caso as colunas estejam ausentes,
+        exiba uma mensagem de erro com `st.error` e não prossiga.
+        Não inclua explicações ou comentários. Retorne apenas o código Python.
+        """
+    ]
+
+    responses = generate_code(prompts)
+
+    with open("dashboard_batch.py", "w") as f:
+        f.write("# Código gerado para o Dashboard Streamlit\n")
+        for response in responses:
+            texto_limpado = response[9:-4].strip()
+            f.write(texto_limpado + "\n\n")
+
+
 if __name__ == "__main__":
-
-
-
-
-
-
-
+    # Questão 3
     #deputados = get_deputados()
     #df_deputados = pd.DataFrame(deputados)
-
-    # Questão 4
-    # df_despesas = questao4(df_deputados)
-
-    # Questão 4a
-    #df_agrupado = questao4a(df_despesas)
-
-    # Questão 4b
-    #questao4b()
-
-    # Questão 4c
-    #questao4c()
-
-    # Questão 5
-    #print(questao_5())
-
-    # Questao 5a:
-    #questao_5a()
-
-    # Questao 5b
-    #questao_5b()
-
-    #Questão 6 completa
-    #result = questao6()
-    #with open("dashboard.py", "w") as file:
-        #file.write(result)
-
-
-
-
-    #df.to_parquet("data/deputados.parquet", index=False)
 
     """
     prompt =
@@ -382,3 +410,34 @@ if __name__ == "__main__":
 
     with open("data/insights_distribuicao_deputados.json", 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)"""
+
+    #df.to_parquet("data/deputados.parquet", index=False)
+
+    # Questão 4
+    # df_despesas = questao4(df_deputados)
+
+    # Questão 4a
+    #df_agrupado = questao4a(df_despesas)
+
+    # Questão 4b
+    #questao4b()
+
+    # Questão 4c
+    #questao4c()
+
+    # Questão 5
+    #print(questao_5())
+
+    # Questao 5a:
+    #questao_5a()
+
+    # Questao 5b
+    #questao_5b()
+
+    #Questão 6 completa
+    #result = questao6()
+    #with open("dashboard_chain.py", "w") as file:
+        #file.write(result)
+
+    #Questão 7 Completa
+    questao7()
